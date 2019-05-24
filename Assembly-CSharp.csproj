@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Board\ClickableHex.cs" />
     <Compile Include="Assets\Board\HexTileGenerator.cs" />
+    <Compile Include="Assets\Board\Node.cs" />
     <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\Shared\Ramps\Runtime\RampAsset.cs" />

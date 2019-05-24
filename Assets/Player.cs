@@ -5,6 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     GameObject player;
+    public int tileX;
+    public int tileZ;
+
+    public HexTileGenerator map;
+
     // Start is called before the first frame update
     void Start()
     {

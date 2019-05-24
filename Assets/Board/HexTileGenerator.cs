@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HexTileGenerator : MonoBehaviour {
+
     public GameObject hexTilePreFab;
+    public GameObject playerStart;
 
     [SerializeField] int mapWidth = 25;
     [SerializeField] int mapHeight = 12;
+
+    int[,] tiles;
 
     public float tileXoffset = 1.8f;
     public float tileZoffset = 1.565f;
@@ -15,10 +19,25 @@ public class HexTileGenerator : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
+        GenerateMapData();
         CreateHexTileMap();
+        playerStartPoint();
     }
 
-    
+
+    void GenerateMapData() {
+        //Allocate map tiles
+        tiles = new int[mapWidth, mapHeight];
+        int x, z;
+
+        //Initaialze map hex tiles
+        for (x = 0; x < mapWidth; x++) {
+            for (z = 0; z < mapHeight; z++) {
+                tiles[x, z] = 0;
+            }
+        }
+    }
+
     void CreateHexTileMap()
     {
         for(int x = 0; x <= mapWidth; x++) {
@@ -45,5 +64,10 @@ public class HexTileGenerator : MonoBehaviour {
 
         GO.transform.parent = transform;
         GO.name = x.ToString() +", " + z.ToString();
+    }
+    void playerStartPoint() {
+        playerStart.GetComponent<Player>().tileX = (int)playerStart.transform.position.x;
+        playerStart.GetComponent<Player>().tileZ = (int)playerStart.transform.position.z;
+        playerStart.GetComponent<Player>().map = this;
     }
 }
