@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    GameObject player;
     public int tileX;
     public int tileZ;
+    
+    //GameObject playerCube;
 
     public HexTileGenerator map;
 
@@ -19,6 +20,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //playerStart.transform.position = Hexpos.pos;
     }
 }

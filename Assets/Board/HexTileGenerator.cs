@@ -6,6 +6,7 @@ public class HexTileGenerator : MonoBehaviour {
 
     public GameObject hexTilePreFab;
     public GameObject playerStart;
+    ClickableHex Hexpos;
 
     [SerializeField] int mapWidth = 25;
     [SerializeField] int mapHeight = 12;
@@ -16,6 +17,7 @@ public class HexTileGenerator : MonoBehaviour {
     public float tileZoffset = 1.565f;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,6 @@ public class HexTileGenerator : MonoBehaviour {
         CreateHexTileMap();
         playerStartPoint();
     }
-
 
     void GenerateMapData() {
         //Allocate map tiles
@@ -61,7 +62,6 @@ public class HexTileGenerator : MonoBehaviour {
         }
     }
     void setTileInfo(GameObject GO, int x, int z) {
-
         GO.transform.parent = transform;
         GO.name = x.ToString() +", " + z.ToString();
     }
@@ -69,5 +69,8 @@ public class HexTileGenerator : MonoBehaviour {
         playerStart.GetComponent<Player>().tileX = (int)playerStart.transform.position.x;
         playerStart.GetComponent<Player>().tileZ = (int)playerStart.transform.position.z;
         playerStart.GetComponent<Player>().map = this;
+    }
+    public void playerMove(Vector3 pos) {
+        playerStart.transform.position = pos;
     }
 }
