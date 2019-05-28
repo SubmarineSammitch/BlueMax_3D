@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int tileX;
-    public int tileZ;
-    
-    //GameObject playerCube;
-
+    public float tileX;
+    public float tileZ;
     public HexTileGenerator map;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
-        //GameObject playerStart = new Vector3()
+       // Debug.Log("Loaded: tileX and tileZ values loaded");
+        //Player one
+        //tileX = 7.2f;
+        //tileZ = 9.4f;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        //playerStart.transform.position = Hexpos.pos;
     }
 }

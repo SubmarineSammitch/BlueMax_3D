@@ -6,12 +6,14 @@ public class HexTileGenerator : MonoBehaviour {
 
     public GameObject hexTilePreFab;
     public GameObject playerStart;
+    public GameObject player2Start;
     ClickableHex Hexpos;
 
     [SerializeField] int mapWidth = 25;
     [SerializeField] int mapHeight = 12;
 
     int[,] tiles;
+    Node[,] graph;
 
     public float tileXoffset = 1.8f;
     public float tileZoffset = 1.565f;
@@ -21,9 +23,9 @@ public class HexTileGenerator : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
+        playerStartPoint();
         GenerateMapData();
         CreateHexTileMap();
-        playerStartPoint();
     }
 
     void GenerateMapData() {
@@ -61,16 +63,83 @@ public class HexTileGenerator : MonoBehaviour {
             }
         }
     }
+
+    //void GeneratePathfindingGraph() {
+    //    // Initialize the array
+    //    graph = new Node[mapSizeX, mapSizeY];
+
+    //    // Initialize a Node for each spot in the array
+    //    for (int x = 0; x < mapSizeX; x++) {
+    //        for (int y = 0; y < mapSizeX; y++) {
+    //            graph[x, y] = new Node();
+    //            graph[x, y].x = x;
+    //            graph[x, y].y = y;
+    //        }
+    //    }
+
+    //    // Now that all the nodes exist, calculate their neighbours
+    //    for (int x = 0; x < mapSizeX; x++) {
+    //        for (int y = 0; y < mapSizeX; y++) {
+
+    //            // This is the 4-way connection version:
+    //            /*				if(x > 0)
+    //                                graph[x,z].neighbours.Add( graph[x-1, z] );
+    //                            if(x < mapSizeX-1)
+    //                                graph[x,z].neighbours.Add( graph[x+1, z] );
+    //                            if(z > 0)
+    //                                graph[x,z].neighbours.Add( graph[x, z-1] );
+    //                            if(z < mapSizeZ-1)
+    //                                graph[x,z].neighbours.Add( graph[x, z+1] );
+    //            */
+
+    //            // This is the 8-way connection version (allows diagonal movement)
+    //            // Try left
+    //            if (x > 0) {
+    //                graph[x, y].neighbours.Add(graph[x - 1, y]);
+    //                if (y > 0)
+    //                    graph[x, y].neighbours.Add(graph[x - 1, y - 1]);
+    //                if (y < mapSizeY - 1)
+    //                    graph[x, y].neighbours.Add(graph[x - 1, y + 1]);
+    //            }
+
+    //            // Try Right
+    //            if (x < mapSizeX - 1) {
+    //                graph[x, y].neighbours.Add(graph[x + 1, y]);
+    //                if (y > 0)
+    //                    graph[x, y].neighbours.Add(graph[x + 1, y - 1]);
+    //                if (y < mapSizeY - 1)
+    //                    graph[x, y].neighbours.Add(graph[x + 1, y + 1]);
+    //            }
+
+    //            // Try straight up and down
+    //            if (y > 0)
+    //                graph[x, y].neighbours.Add(graph[x, y - 1]);
+    //            if (y < mapSizeY - 1)
+    //                graph[x, y].neighbours.Add(graph[x, y + 1]);
+
+    //            // This also works with 6-way hexes and n-way variable areas (like EU4)
+    //        }
+    //    }
+    //}
+
     void setTileInfo(GameObject GO, int x, int z) {
         GO.transform.parent = transform;
         GO.name = x.ToString() +", " + z.ToString();
     }
+
     void playerStartPoint() {
-        playerStart.GetComponent<Player>().tileX = (int)playerStart.transform.position.x;
-        playerStart.GetComponent<Player>().tileZ = (int)playerStart.transform.position.z;
-        playerStart.GetComponent<Player>().map = this;
+        //Debug.Log("Loaded: playerStartPoint");
+        playerStart.transform.position = new Vector3(playerStart.GetComponent<Player>().tileX,0,playerStart.GetComponent<Player>().tileZ);
+        player2Start.transform.position = new Vector3(player2Start.GetComponent<Player2>().tileX, 0, player2Start.GetComponent<Player2>().tileZ);
+
+        //playerStart.GetComponent<Player>().tileX = playerStart.transform.position.x;
+        //playerStart.GetComponent<Player>().tileZ = playerStart.transform.position.z;
+        //playerStart.GetComponent<Player>().map = this;
     }
-    public void playerMove(Vector3 pos) {
+    public void player1Move(Vector3 pos) {
         playerStart.transform.position = pos;
+    }
+    public void player2Move(Vector3 pos) {
+        player2Start.transform.position = pos;
     }
 }

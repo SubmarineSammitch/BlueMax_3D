@@ -66,6 +66,7 @@
     <Compile Include="Assets\Board\Node.cs" />
     <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\Player.cs" />
+    <Compile Include="Assets\Player2.cs" />
     <Compile Include="Assets\Shared\Ramps\Runtime\RampAsset.cs" />
     <Compile Include="Assets\Shared\Scripts\AdjustTimeScale.cs" />
     <Compile Include="Assets\Shared\Scripts\ProximityActivate.cs" />
