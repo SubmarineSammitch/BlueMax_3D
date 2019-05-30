@@ -64,63 +64,63 @@ public class HexTileGenerator : MonoBehaviour {
         }
     }
 
-    //void GeneratePathfindingGraph() {
-    //    // Initialize the array
-    //    graph = new Node[mapSizeX, mapSizeY];
+    void GeneratePathfindingGraph() {
+        // Initialize the array
+        graph = new Node[mapWidth, mapHeight];
 
-    //    // Initialize a Node for each spot in the array
-    //    for (int x = 0; x < mapSizeX; x++) {
-    //        for (int y = 0; y < mapSizeX; y++) {
-    //            graph[x, y] = new Node();
-    //            graph[x, y].x = x;
-    //            graph[x, y].y = y;
-    //        }
-    //    }
+        // Initialize a Node for each spot in the array
+        for (int x = 0; x < mapWidth; x++) {
+            for (int z = 0; z < mapWidth; z++) {
+                graph[x, z] = new Node();
+                graph[x, z].x = x;
+                graph[x, z].z = z;
+            }
+        }
 
-    //    // Now that all the nodes exist, calculate their neighbours
-    //    for (int x = 0; x < mapSizeX; x++) {
-    //        for (int y = 0; y < mapSizeX; y++) {
+        // Now that all the nodes exist, calculate their neighbours
+        for (int x = 0; x < mapWidth; x++) {
+            for (int z = 0; z < mapWidth; z++) {
 
-    //            // This is the 4-way connection version:
-    //            /*				if(x > 0)
-    //                                graph[x,z].neighbours.Add( graph[x-1, z] );
-    //                            if(x < mapSizeX-1)
-    //                                graph[x,z].neighbours.Add( graph[x+1, z] );
-    //                            if(z > 0)
-    //                                graph[x,z].neighbours.Add( graph[x, z-1] );
-    //                            if(z < mapSizeZ-1)
-    //                                graph[x,z].neighbours.Add( graph[x, z+1] );
-    //            */
+                //            // This is the 4-way connection version:
+                //            /*				if(x > 0)
+                //                                graph[x,z].neighbours.Add( graph[x-1, z] );
+                //                            if(x < mapSizeX-1)
+                //                                graph[x,z].neighbours.Add( graph[x+1, z] );
+                //                            if(z > 0)
+                //                                graph[x,z].neighbours.Add( graph[x, z-1] );
+                //                            if(z < mapSizeZ-1)
+                //                                graph[x,z].neighbours.Add( graph[x, z+1] );
+                //            */
 
-    //            // This is the 8-way connection version (allows diagonal movement)
-    //            // Try left
-    //            if (x > 0) {
-    //                graph[x, y].neighbours.Add(graph[x - 1, y]);
-    //                if (y > 0)
-    //                    graph[x, y].neighbours.Add(graph[x - 1, y - 1]);
-    //                if (y < mapSizeY - 1)
-    //                    graph[x, y].neighbours.Add(graph[x - 1, y + 1]);
-    //            }
+                //            // This is the 8-way connection version (allows diagonal movement)
+                //            // Try left
+                //            if (x > 0) {
+                //                graph[x, z].neighbours.Add(graph[x - 1, z]);
+                //                if (z > 0)
+                //                    graph[x, y].neighbours.Add(graph[x - 1, z - 1]);
+                //                if (z < mapHeight - 1)
+                //                    graph[x, y].neighbours.Add(graph[x - 1, z + 1]);
+                //            }
 
-    //            // Try Right
-    //            if (x < mapSizeX - 1) {
-    //                graph[x, y].neighbours.Add(graph[x + 1, y]);
-    //                if (y > 0)
-    //                    graph[x, y].neighbours.Add(graph[x + 1, y - 1]);
-    //                if (y < mapSizeY - 1)
-    //                    graph[x, y].neighbours.Add(graph[x + 1, y + 1]);
-    //            }
+                //            // Try Right
+                //            if (x < mapWidth - 1) {
+                //                graph[x, z].neighbours.Add(graph[x + 1, z]);
+                //                if (z > 0)
+                //                    graph[x, z].neighbours.Add(graph[x + 1, z - 1]);
+                //                if (z < mapHeight - 1)
+                //                    graph[x, z].neighbours.Add(graph[x + 1, z + 1]);
+                //            }
 
-    //            // Try straight up and down
-    //            if (y > 0)
-    //                graph[x, y].neighbours.Add(graph[x, y - 1]);
-    //            if (y < mapSizeY - 1)
-    //                graph[x, y].neighbours.Add(graph[x, y + 1]);
+                //            // Try straight up and down
+                //            if (z > 0)
+                //                graph[x, z].neighbours.Add(graph[x, z - 1]);
+                //            if (z < mapHeight - 1)
+                //                graph[x, z].neighbours.Add(graph[x, z + 1]);
 
-    //            // This also works with 6-way hexes and n-way variable areas (like EU4)
-    //        }
-    //    }
-    //}
+                //            // This also works with 6-way hexes and n-way variable areas (like EU4)
+                        }
+                    }
+            }
 
     void setTileInfo(GameObject GO, int x, int z) {
         GO.transform.parent = transform;
