@@ -15,7 +15,7 @@ public class ClickableHex : MonoBehaviour
         pos = GetComponent<Renderer>().bounds.center;
     }
     private void OnMouseUp() {
-        //Debug.Log("Click");
+        // Debug.Log("Click");
         //Debug.Log(pos);
         map.player1Move(pos);
     }
