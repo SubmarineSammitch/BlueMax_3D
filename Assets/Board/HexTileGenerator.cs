@@ -9,8 +9,8 @@ public class HexTileGenerator : MonoBehaviour {
     public GameObject player2Start;
     ClickableHex Hexpos;
 
-    [SerializeField] int mapWidth = 25;
-    [SerializeField] int mapHeight = 12;
+    [SerializeField] int mapWidth;
+    [SerializeField] int mapHeight;
 
     int[,] tiles;
     Node[,] graph;
@@ -71,8 +71,9 @@ public class HexTileGenerator : MonoBehaviour {
         graph = new Node[mapWidth, mapHeight];
 
         // Initialize a Node for each spot in the array
+        Debug.Log("MapWidth, MapHeight" + mapWidth + "," + mapHeight);
         for (int x = 0; x < mapWidth; x++) {
-            for (int z = 0; z < mapWidth; z++) {
+            for (int z = 0; z < mapHeight; z++) {
                 graph[x, z] = new Node();
                 graph[x, z].x = x;
                 graph[x, z].z = z;
@@ -81,45 +82,59 @@ public class HexTileGenerator : MonoBehaviour {
 
         // Now that all the nodes exist, calculate their neighbours
         for (int x = 0; x < mapWidth; x++) {
-            for (int z = 0; z < mapWidth; z++) {
+            for (int z = 0; z < mapHeight; z++) {
 
-                // This is the 4-way connection version:
-                /*				if(x > 0)
-                                    graph[x,y].neighbours.Add( graph[x-1, y] );
-                                if(x < mapSizeX-1)
-                                    graph[x,y].neighbours.Add( graph[x+1, y] );
-                                if(y > 0)
-                                    graph[x,y].neighbours.Add( graph[x, y-1] );
-                                if(y < mapSizeY-1)
-                                    graph[x,y].neighbours.Add( graph[x, y+1] );
-                */
+                //when x and z coords are the same the calulation for neigbors will be diffrent 
+                if (graph[x, z].x == graph[x, z].z) {
+                    Debug.Log("IF: "+ graph[x, z].x + "," + graph[x, z].z);
+                    // Try left
+                    if (x > 0) {
+                        graph[x, z].neighbours.Add(graph[x, z + 1]);
+                        if (z > 0)
+                            graph[x, z].neighbours.Add(graph[x - 1, z]);
+                        if (z < mapHeight - 1)
+                            graph[x, z].neighbours.Add(graph[x, z - 1]); 
+                    }
 
-                // This is the 8-way connection version (allows diagonal movement)
-                // Try left
-                if (x > 0) {
-                    graph[x, z].neighbours.Add(graph[x - 1, z]);
-                    if (z > 0)
-                        graph[x, z].neighbours.Add(graph[x - 1, z - 1]);
-                    if (z < mapHeight - 1)
-                        graph[x, z].neighbours.Add(graph[x - 1, z + 1]);
-                }
-
-                // Try Right
-                if (x < mapWidth - 1) {
-                    graph[x, z].neighbours.Add(graph[x + 1, z]);
-                    if (z > 0)
-                        graph[x, z].neighbours.Add(graph[x + 1, z - 1]);
-                    if (z < mapHeight - 1)
+                    // Try Right
+                    if (x < mapWidth - 1) {
                         graph[x, z].neighbours.Add(graph[x + 1, z + 1]);
+                        if (z > 0)
+                            graph[x, z].neighbours.Add(graph[x + 1, z]);
+                        if (z < mapHeight - 1 && z > 0)
+                            graph[x, z].neighbours.Add(graph[x + 1, z - 1]);
+                    }
+
+                }
+                else {
+                    Debug.Log("ELSE: "+graph[x, z].x + "," + graph[x, z].z);
+                    // Try left
+                    if (x > 0) {
+                        graph[x, z].neighbours.Add(graph[x -1, z + 1]);
+                        if (z > 0)
+                            graph[x, z].neighbours.Add(graph[x - 1, z]);
+                        if (z < mapHeight - 1)
+                            graph[x, z].neighbours.Add(graph[x - 1, z - 1]);
+                    }
+
+                    // Try Right
+                    if (x < mapWidth - 1) {
+                        graph[x, z].neighbours.Add(graph[x, z + 1]);
+                        if (z > 0)
+                            graph[x, z].neighbours.Add(graph[x + 1, z]);
+                        if (z < mapHeight - 1)
+                            graph[x, z].neighbours.Add(graph[x, z - 1]);
+                    }
+
                 }
 
-                // Try straight up and down
-                if (z > 0)
-                    graph[x, z].neighbours.Add(graph[x, z - 1]);
-                if (z < mapHeight - 1)
-                    graph[x, z].neighbours.Add(graph[x, z + 1]);
+                //// Try straight up and down
+                //if (z > 0)
+                //    graph[x, z].neighbours.Add(graph[x, z - 1]);
+                //if (z < mapHeight - 1)
+                //    graph[x, z].neighbours.Add(graph[x, z + 1]);
 
-                // This also works with 6-way hexes and n-way variable areas (like EU4)
+                //// This also works with 6-way hexes and n-way variable areas (like EU4)
             }
         }
 

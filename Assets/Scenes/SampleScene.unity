@@ -573,7 +573,7 @@ MonoBehaviour:
   playerStart: {fileID: 488260968}
   player2Start: {fileID: 395778587}
   mapWidth: 25
-  mapHeight: 25
+  mapHeight: 12
   tileXoffset: 1.8
   tileZoffset: 1.565
 --- !u!4 &1813962504
