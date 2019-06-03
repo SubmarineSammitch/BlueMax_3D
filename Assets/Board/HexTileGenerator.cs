@@ -45,8 +45,8 @@ public class HexTileGenerator : MonoBehaviour {
 
     void CreateHexTileMap()
     {
-        for(int x = 0; x <= mapWidth; x++) {
-            for(int z = 0; z <= mapHeight; z++) {
+        for(int x = 0; x < mapWidth; x++) {
+            for(int z = 0; z < mapHeight; z++) {
                 GameObject TileGo = Instantiate(hexTilePreFab);
 
                 if (z %2 == 0) {
@@ -68,12 +68,14 @@ public class HexTileGenerator : MonoBehaviour {
 
     void GeneratePathfindingGraph() {
         // Initialize the array
-        graph = new Node[mapWidth, mapHeight];
+        graph = new Node[mapWidth , mapHeight];
+
 
         // Initialize a Node for each spot in the array
-        Debug.Log("MapWidth, MapHeight" + mapWidth + "," + mapHeight);
+        Debug.Log("MapWidth, MapHeight " + mapWidth + "," + mapHeight);
         for (int x = 0; x < mapWidth; x++) {
             for (int z = 0; z < mapHeight; z++) {
+                //Debug.Log("X, Z : " + x +" , "+ z);
                 graph[x, z] = new Node();
                 graph[x, z].x = x;
                 graph[x, z].z = z;
@@ -84,25 +86,41 @@ public class HexTileGenerator : MonoBehaviour {
         for (int x = 0; x < mapWidth; x++) {
             for (int z = 0; z < mapHeight; z++) {
 
-                //when x and z coords are the same the calulation for neigbors will be diffrent 
-                if (graph[x, z].x == graph[x, z].z) {
-                    Debug.Log("IF: "+ graph[x, z].x + "," + graph[x, z].z);
+                
+                if (graph[x, z].z%2 == 0) {
+                    //Debug.Log("IF: "+ graph[x, z].x + "," + graph[x, z].z);
                     // Try left
                     if (x > 0) {
-                        graph[x, z].neighbours.Add(graph[x, z + 1]);
-                        if (z > 0)
+                        //Debug.Log("LEFT IF: " + graph[x, z].x + "," + graph[x, z].z);
+                        if (z != mapHeight - 1) {
+                            //Debug.Log("LT");
+                            graph[x, z].neighbours.Add(graph[x - 1, z + 1]);
+                        }
+                        if (z > 0) {
+                            //Debug.Log("LM");
                             graph[x, z].neighbours.Add(graph[x - 1, z]);
-                        if (z < mapHeight - 1)
-                            graph[x, z].neighbours.Add(graph[x, z - 1]); 
+                        }
+                        if (z <= mapHeight - 1 && z != 0) {
+                            //Debug.Log("LL");
+                            graph[x, z].neighbours.Add(graph[x - 1, z - 1]);
+                        }
                     }
 
                     // Try Right
                     if (x < mapWidth - 1) {
-                        graph[x, z].neighbours.Add(graph[x + 1, z + 1]);
-                        if (z > 0)
+                        //Debug.Log("RIGHT IF: " + graph[x, z].x + "," + graph[x, z].z);
+                        if (z != mapHeight - 1) {
+                            //Debug.Log("RT");
+                            graph[x, z].neighbours.Add(graph[x, z + 1]);
+                        }
+                        if (z > 0) {
                             graph[x, z].neighbours.Add(graph[x + 1, z]);
-                        if (z < mapHeight - 1 && z > 0)
-                            graph[x, z].neighbours.Add(graph[x + 1, z - 1]);
+                            //Debug.Log("RM");
+                        }
+                        if (z < mapHeight - 1 && z != 0) {
+                            //Debug.Log("RL");
+                            graph[x, z].neighbours.Add(graph[x, z - 1]);
+                        }
                     }
 
                 }
@@ -110,31 +128,39 @@ public class HexTileGenerator : MonoBehaviour {
                     Debug.Log("ELSE: "+graph[x, z].x + "," + graph[x, z].z);
                     // Try left
                     if (x > 0) {
-                        graph[x, z].neighbours.Add(graph[x -1, z + 1]);
-                        if (z > 0)
+                        //Debug.Log("LEFT ELSE: " + graph[x, z].x + "," + graph[x, z].z);
+                        if (z != mapHeight - 1) {
+                            //Debug.Log("LT");
+                            graph[x, z].neighbours.Add(graph[x, z + 1]);
+                        }
+                        if (z > 0) {
+                            //Debug.Log("LM");
                             graph[x, z].neighbours.Add(graph[x - 1, z]);
-                        if (z < mapHeight - 1)
-                            graph[x, z].neighbours.Add(graph[x - 1, z - 1]);
+                        }
+                        if (z <= mapHeight - 1 && z != 0) {
+                            //Debug.Log("LL");
+                            graph[x, z].neighbours.Add(graph[x, z - 1]);
+                        }
                     }
 
                     // Try Right
                     if (x < mapWidth - 1) {
-                        graph[x, z].neighbours.Add(graph[x, z + 1]);
-                        if (z > 0)
+                        //Debug.Log("RIGHT ELSE: " + graph[x, z].x + "," + graph[x, z].z);
+                        if (z != mapHeight - 1) {
+                            //Debug.Log("RT");
+                            graph[x, z].neighbours.Add(graph[x + 1, z + 1]);
+                        }
+                        if (z > 0) {
+                            //Debug.Log("RM");
                             graph[x, z].neighbours.Add(graph[x + 1, z]);
-                        if (z < mapHeight - 1)
-                            graph[x, z].neighbours.Add(graph[x, z - 1]);
+                        }
+                        if (z <= mapHeight - 1 && z != 0) {
+                            //Debug.Log("RL");
+                            graph[x, z].neighbours.Add(graph[x + 1, z - 1]);
+                        }
                     }
 
                 }
-
-                //// Try straight up and down
-                //if (z > 0)
-                //    graph[x, z].neighbours.Add(graph[x, z - 1]);
-                //if (z < mapHeight - 1)
-                //    graph[x, z].neighbours.Add(graph[x, z + 1]);
-
-                //// This also works with 6-way hexes and n-way variable areas (like EU4)
             }
         }
 
