@@ -351,6 +351,7 @@ MonoBehaviour:
   tileX: 7.2
   tileZ: 9.4
   map: {fileID: 0}
+  m_ClickHex: {fileID: 0}
 --- !u!4 &488260970
 Transform:
   m_ObjectHideFlags: 0
@@ -551,7 +552,7 @@ GameObject:
   - component: {fileID: 1813962503}
   m_Layer: 0
   m_Name: TileGeneratior
-  m_TagString: Untagged
+  m_TagString: HexTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

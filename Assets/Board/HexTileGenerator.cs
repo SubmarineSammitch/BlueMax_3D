@@ -9,6 +9,8 @@ public class HexTileGenerator : MonoBehaviour {
     public GameObject player2Start;
     ClickableHex Hexpos;
 
+    private Color m_TravelColor;
+
     [SerializeField] int mapWidth;
     [SerializeField] int mapHeight;
 
@@ -23,11 +25,12 @@ public class HexTileGenerator : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        playerStartPoint();
+        
         GenerateMapData();
         CreateHexTileMap();
         //basicMovement();
         GeneratePathfindingGraph();
+        playerStartPoint();
     }
 
     void GenerateMapData() {
@@ -125,7 +128,7 @@ public class HexTileGenerator : MonoBehaviour {
 
                 }
                 else {
-                    Debug.Log("ELSE: "+graph[x, z].x + "," + graph[x, z].z);
+                    //Debug.Log("ELSE: "+graph[x, z].x + "," + graph[x, z].z);
                     // Try left
                     if (x > 0) {
                         //Debug.Log("LEFT ELSE: " + graph[x, z].x + "," + graph[x, z].z);
@@ -175,20 +178,18 @@ public class HexTileGenerator : MonoBehaviour {
     void playerStartPoint() {
         //Debug.Log("Loaded: playerStartPoint");
         playerStart.transform.position = new Vector3(playerStart.GetComponent<Player>().tileX,0,playerStart.GetComponent<Player>().tileZ);
+       // Debug.Log(playerStart.GetComponent<ClickableHex>().tileX + " " + playerStart.GetComponent<ClickableHex>().tileZ);
         player2Start.transform.position = new Vector3(player2Start.GetComponent<Player2>().tileX, 0, player2Start.GetComponent<Player2>().tileZ);
-
-        //playerStart.GetComponent<Player>().tileX = playerStart.transform.position.x;
-        //playerStart.GetComponent<Player>().tileZ = playerStart.transform.position.z;
-        //playerStart.GetComponent<Player>().map = this;
     }
     public void player1Move(Vector3 pos) {
         playerStart.transform.position = pos;
+       
     }
     public void player2Move(Vector3 pos) {
         player2Start.transform.position = pos;
     }
 
     public void basicMovement() {
-
+        
     }
 }

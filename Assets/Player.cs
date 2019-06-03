@@ -7,15 +7,16 @@ public class Player : MonoBehaviour
     public float tileX;
     public float tileZ;
     public HexTileGenerator map;
+    public ClickableHex m_ClickHex;
     
     void Start()
     {
-       // Debug.Log("Loaded: tileX and tileZ values loaded");
-        //Player one
-        //tileX = 7.2f;
-        //tileZ = 9.4f;
+        //Debug.Log(m_ClickHex.tileX + " " + m_ClickHex.tileZ);
     }
-    
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log("Trigger event on start "+ other.GetComponent<ClickableHex>().tileX);
+    }
+
     void Update()
     {
     }

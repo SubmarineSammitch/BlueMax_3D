@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClickableHex : MonoBehaviour
-{
+public class ClickableHex : MonoBehaviour {
     public int tileX;
     public int tileZ;
     public Vector3 pos;
+
     public HexTileGenerator map;
     private Color m_HoverColor;
+    public GameObject m_HoverHex;
+    Node[,] m_HoverObject;
 
     private void Start() {
 
@@ -23,6 +25,8 @@ public class ClickableHex : MonoBehaviour
         //Debug.Log("Im a Hoverin");
         m_HoverColor = GetComponent<Renderer>().material.color;
         GetComponent<Renderer>().material.color = Color.red;
+        
+
     }
     private void OnMouseExit() {
         GetComponent<Renderer>().material.color = m_HoverColor;
